@@ -4,8 +4,10 @@ from pydantic import BaseModel,Field
 import pandas as pd
 from typing import Literal
 from fastapi.middleware.cors import CORSMiddleware
-
-model = joblib.load("Mental_Health_Model.pkl")
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "Mental_Health_Model.pkl")
+model = joblib.load(MODEL_PATH)
 top_countries = ['Other', 'India', 'USA', 'Canada', 'Australia', 'UK', 'Germany', 'Mexico', 'Turkey', 'France']
 app = FastAPI()
 
