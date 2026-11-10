@@ -4,25 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="description" content="StressO_Meter — Predict your depression risk in one go using AI-driven behavioral analysis." />
+  <meta name="description" content="StressO_Meter — Predict your depression risk score in one go using AI-driven behavioral analysis." />
   <meta name="author" content="Lovneesh Agrawal" />
   <!--
     SECURITY NOTE:
     In production, serve these as actual HTTP headers:
-      Content-Security-Policy: default-src 'self'; connect-src https://mansik-santulan-project.onrender.com
+      Content-Security-Policy: default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; connect-src https://mansik-santulan-project.onrender.com http://127.0.0.1:8000; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com;
       X-Content-Type-Options: nosniff
       X-Frame-Options: DENY
-      Referrer-Policy: no-referrer
+      Referrer-Policy: strict-origin-when-cross-origin
   -->
-  <title>StressO_Meter — Mental Wellness Assessment</title>
+  <title>StressO_Meter — Mental Wellness & Depression Risk Assessment</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Ambient particle canvas -->
+  <!-- Ambient light-gold particle canvas -->
   <canvas id="canvas-bg" aria-hidden="true"></canvas>
 
   <!-- ═══════════════════ HEADER ═══════════════════ -->
@@ -38,13 +38,13 @@
       </div>
 
       <nav class="hdr-nav" role="navigation" aria-label="Primary navigation">
-        <a href="#analyzer"    class="nav-link">Analyze</a>
+        <a href="#analyzer" class="nav-link">Assessment</a>
         <a href="#how-section" class="nav-link">Process</a>
-        <a href="#results-container" class="nav-link">Results</a>
+        <a href="#results-container" class="nav-link">Score Result</a>
       </nav>
 
       <div class="hdr-right">
-        <div class="secure-badge" aria-label="Secure — no data stored permanently">
+        <div class="secure-badge" aria-label="Encrypted & Ephemeral processing">
           <span class="secure-icon" aria-hidden="true">⚿</span>
           <span>Secure</span>
         </div>
@@ -58,10 +58,10 @@
   <!-- ═══════════════════ MAIN ═══════════════════ -->
   <main class="site-main" role="main">
 
-    <!-- ── ANALYZER SECTION ── -->
+    <!-- ── ANALYZER SECTION (ALL INPUTS ABOVE FOLD) ── -->
     <section class="analyzer-section" id="analyzer" aria-labelledby="hero-title">
 
-      <!-- Left: Hero -->
+      <!-- Left: Editorial Hero -->
       <aside class="hero-panel" aria-label="About StressO_Meter">
         <div class="hero-content">
 
@@ -74,7 +74,7 @@
           </h1>
 
           <p class="hero-desc animate-in" style="--delay:320ms">
-            12 behavioral signals. One trained model. Instant insight into your mental wellness index — grounded in real data, not guesswork.
+            12 behavioral signals evaluated against a trained machine learning model. Receive your quantitative mental health score and depression risk tier instantly.
           </p>
 
           <div class="hero-stats animate-in" style="--delay:400ms">
@@ -84,19 +84,19 @@
             </div>
             <div class="stat-divider" aria-hidden="true"></div>
             <div class="stat">
-              <span class="stat-val" data-target="4">0</span>
-              <span class="stat-lbl">Risk Levels</span>
+              <span class="stat-val" data-target="10">0</span>
+              <span class="stat-lbl">Score Scale</span>
             </div>
             <div class="stat-divider" aria-hidden="true"></div>
             <div class="stat">
               <span class="stat-val" data-target="1">0</span>
-              <span class="stat-lbl">Click Result</span>
+              <span class="stat-lbl">Instant Run</span>
             </div>
           </div>
 
           <div class="privacy-note animate-in" style="--delay:480ms" role="note">
             <span class="privacy-icon" aria-hidden="true">⚿</span>
-            <p>Your inputs are processed in real time. No personal data is stored permanently on the server.</p>
+            <p>Your inputs are processed in real time. No personal information is persistently stored on the server.</p>
           </div>
 
         </div>
@@ -108,15 +108,18 @@
         </div>
       </aside>
 
-      <!-- Right: Form + Results -->
+      <!-- Right: Compact 1-Screen Form + Results -->
       <div class="form-panel">
 
         <!-- ── FORM BOX ── -->
         <div class="form-box animate-in" style="--delay:100ms" id="form-box">
 
           <div class="form-box-header">
-            <h2 class="form-box-title">Your Profile</h2>
-            <span class="form-box-sub">All 12 fields required</span>
+            <div>
+              <h2 class="form-box-title">Behavioral Profile</h2>
+              <span class="form-box-sub">Enter daily digital & routine metrics (all required)</span>
+            </div>
+            <span class="form-badge">12 Fields</span>
           </div>
 
           <div class="global-error" id="form-error-global" role="alert" aria-live="assertive"></div>
@@ -165,7 +168,7 @@
                 <div class="select-wrap">
                   <select id="f-academic" name="Academic_Level" class="fi fs"
                           required aria-required="true" aria-describedby="err-academic">
-                    <option value="">Select…</option>
+                    <option value="">Select level…</option>
                     <option value="High School">High School</option>
                     <option value="Undergraduate">Undergraduate</option>
                     <option value="Graduate">Graduate</option>
@@ -181,7 +184,7 @@
                 <div class="select-wrap">
                   <select id="f-platform" name="Most_Used_Platform" class="fi fs"
                           required aria-required="true" aria-describedby="err-platform">
-                    <option value="">Select…</option>
+                    <option value="">Select platform…</option>
                     <option value="Instagram">Instagram</option>
                     <option value="YouTube">YouTube</option>
                     <option value="TikTok">TikTok</option>
@@ -205,7 +208,7 @@
                 <div class="select-wrap">
                   <select id="f-purpose" name="Purpose_Of_Use" class="fi fs"
                           required aria-required="true" aria-describedby="err-purpose">
-                    <option value="">Select…</option>
+                    <option value="">Select purpose…</option>
                     <option value="Entertainment">Entertainment</option>
                     <option value="Education">Education</option>
                     <option value="Networking">Networking</option>
@@ -227,7 +230,7 @@
               <div class="fg" id="grp-unlocks">
                 <label for="f-unlocks" class="fl">Daily Unlocks</label>
                 <input type="number" id="f-unlocks" name="Daily_Unlocks" class="fi"
-                       min="0" step="1" placeholder="e.g. 30"
+                       min="0" step="1" placeholder="e.g. 45"
                        required aria-required="true" aria-describedby="err-unlocks" />
                 <span class="fe" id="err-unlocks" role="alert"></span>
               </div>
@@ -258,11 +261,11 @@
               </div>
 
               <div class="fg" id="grp-stress">
-                <label for="f-stress" class="fl">Stress Level</label>
+                <label for="f-stress" class="fl">Self Stress Level</label>
                 <div class="select-wrap">
                   <select id="f-stress" name="Stress_Level" class="fi fs"
                           required aria-required="true" aria-describedby="err-stress">
-                    <option value="">Select…</option>
+                    <option value="">Select level…</option>
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>
@@ -277,45 +280,58 @@
 
             <div class="form-actions">
               <button type="submit" id="submit-btn" class="submit-btn">
-                <span class="btn-label">Analyze My Profile</span>
+                <span class="btn-label">Predict Depression Risk Score</span>
                 <span class="btn-arrow" aria-hidden="true">→</span>
                 <span class="btn-ripple" aria-hidden="true"></span>
               </button>
-              <span class="form-actions-note">Secure · No data stored</span>
+              <span class="form-actions-note">Client encrypted · Direct model inference</span>
             </div>
 
           </form>
         </div><!-- /form-box -->
 
-        <!-- ── RESULTS BOX ── -->
+        <!-- ── RESULTS CONTAINER ── -->
         <div class="results-box" id="results-container" aria-live="polite" aria-label="Assessment results">
 
           <div class="res-panel res-content" id="results-content">
             <div class="res-header">
               <div>
-                <div class="res-tag">Assessment Complete</div>
-                <h2 class="res-title">Your Result</h2>
+                <div class="res-tag">Model Inference Generated</div>
+                <h2 class="res-title">Depression Risk Analysis</h2>
               </div>
-              <button class="back-btn" id="result-back-btn" aria-label="Go back to form">← Reassess</button>
+              <button class="back-btn" id="result-back-btn" aria-label="Go back to form">← Reassess Profile</button>
             </div>
 
             <div class="res-score-block">
-              <div class="res-score-label">Depression Risk Level</div>
-              <div class="res-score" id="result-score">—</div>
-              <div class="res-band" id="result-score-band"></div>
+              <div class="res-score-label">Depression Risk & Mental Wellness Score</div>
+              
+              <div class="res-score-row">
+                <div class="res-score" id="result-score">—</div>
+                <div class="res-score-scale">/ 10</div>
+              </div>
+
+              <div class="res-band-wrap">
+                <span class="res-band" id="result-score-band">Evaluating</span>
+                <span class="res-percentile" id="result-percentile">Index: —</span>
+              </div>
+
+              <p class="res-verdict" id="result-verdict">Analyzing submitted behavioral markers against wellness baseline...</p>
             </div>
 
-            <div class="res-meter" aria-label="Risk meter">
+            <div class="res-meter" aria-label="Depression risk spectrum meter">
               <div class="meter-track">
                 <div class="meter-fill" id="meter-fill" style="width:0%"></div>
               </div>
               <div class="meter-ticks">
-                <span>Low</span><span>Medium</span><span>High</span><span>Very High</span>
+                <span>Low Risk (&gt;7.5)</span>
+                <span>Moderate (6.5–7.4)</span>
+                <span>Elevated (5.5–6.4)</span>
+                <span>High Risk (&lt;5.5)</span>
               </div>
             </div>
 
             <div class="res-profile">
-              <h3 class="res-profile-title">Submitted Profile</h3>
+              <h3 class="res-profile-title">Submitted Behavioral Parameters</h3>
               <div class="res-grid" id="result-inputs-list"></div>
             </div>
           </div>
@@ -342,22 +358,22 @@
           <li class="how-step">
             <span class="step-num">01</span>
             <div class="step-body">
-              <strong class="step-head">Fill Your Profile</strong>
-              <p>Enter all 12 behavioral signals in the form above — age, gender, social media habits, study hours, and more. Every field is validated before submission.</p>
+              <strong class="step-head">Fill Profile</strong>
+              <p>Supply your 12 routine parameters — screen duration, sleep cadence, activity, and self-reported stress. Everything is validated client-side.</p>
             </div>
           </li>
           <li class="how-step">
             <span class="step-num">02</span>
             <div class="step-body">
-              <strong class="step-head">Model Inference</strong>
-              <p>Your data travels securely to the FastAPI backend, where a trained machine learning model processes each behavioral signal in milliseconds.</p>
+              <strong class="step-head">Model Scoring</strong>
+              <p>The FastAPI cloud backend processes your feature vector through the trained machine learning pipeline, computing an exact quantitative score.</p>
             </div>
           </li>
           <li class="how-step">
             <span class="step-num">03</span>
             <div class="step-body">
-              <strong class="step-head">Instant Assessment</strong>
-              <p>Your depression risk level — Low, Medium, High, or Very High — is returned and visualized immediately. Use it to reflect on your digital habits.</p>
+              <strong class="step-head">Actionable Clarity</strong>
+              <p>Your calculated score and mapped risk classification are returned instantly, helping you spot digital habit imbalances in seconds.</p>
             </div>
           </li>
         </ol>
@@ -381,10 +397,10 @@
         <span class="footer-sep" aria-hidden="true">·</span>
         <span>© 2026 StressO_Meter</span>
         <span class="footer-sep" aria-hidden="true">·</span>
-        <span>For educational purposes only</span>
+        <span>All Rights Reserved</span>
       </div>
       <div class="footer-secure">
-        <span class="footer-secure-pill" aria-label="Secure processing">⚿ Secure</span>
+        <span class="footer-secure-pill" aria-label="Secure processing">⚿ Secure Engine</span>
       </div>
     </div>
   </footer>
