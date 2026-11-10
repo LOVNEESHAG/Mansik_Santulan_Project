@@ -3,444 +3,390 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="StressO_Meter — Enter your daily habits and social media usage to receive a predicted depression score based on a trained machine learning model." />
-  <title>StressO_Meter — Depression Risk Assessment</title>
-
-  <!-- Single external resource: serif display font -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="StressO_Meter — Predict your depression risk in one go using AI-driven behavioral analysis." />
+  <meta name="author" content="Lovneesh Agrawal" />
+  <!--
+    SECURITY HEADERS NOTE:
+    In production, serve these as actual HTTP headers from your web server:
+      Content-Security-Policy: default-src 'self'; connect-src http://127.0.0.1:8000
+      X-Content-Type-Options: nosniff
+      X-Frame-Options: DENY
+      Referrer-Policy: no-referrer
+  -->
+  <title>StressO_Meter — Mental Wellness Assessment</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
-
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
+  <!-- Live ambient particle canvas -->
+  <canvas id="canvas-bg" aria-hidden="true"></canvas>
+
+  <!-- ═══════════════════ HEADER ═══════════════════ -->
   <header class="site-header" role="banner">
-    <div class="container header-inner">
-      <span class="logo">StressO_Meter</span>
-      <span class="logo-tagline">Depression Risk Analysis</span>
+    <div class="hdr-inner">
+      <div class="hdr-brand">
+        <div class="brand-emblem" aria-hidden="true">
+          <span class="emblem-ring"></span>
+          <span class="emblem-dot"></span>
+        </div>
+        <span class="brand-text">StressO<span class="brand-accent">_</span>Meter</span>
+      </div>
+
+      <nav class="hdr-nav" role="navigation" aria-label="Primary">
+        <a href="#analyzer"    class="nav-link" data-section="analyzer">Analyze</a>
+        <a href="#how-section" class="nav-link" data-section="how">Process</a>
+        <a href="#results-container" class="nav-link" data-section="results">Results</a>
+      </nav>
+
+      <div class="hdr-right">
+        <div class="secure-badge" aria-label="Secure — no data stored permanently">
+          <span class="secure-icon" aria-hidden="true">⚿</span>
+          <span>Secure</span>
+        </div>
+        <span class="year-tag">2026</span>
+      </div>
     </div>
+    <div class="hdr-line" aria-hidden="true"></div>
   </header>
 
-  <main id="main-content">
+  <!-- ═══════════════════ MAIN ═══════════════════ -->
+  <main class="site-main" role="main">
 
-    <!-- ===== HERO ===== -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="container hero-inner">
-        <div class="hero-label">Machine Learning Assessment</div>
-        <h1 id="hero-heading" class="hero-heading">
-          Twelve inputs.<br>One score.<br>A clearer picture of your mental state.
-        </h1>
-        <p class="hero-body">
-          Fill in your age, academic background, social media habits, and daily routine.
-          The model returns a predicted depression risk score derived from student behavioral data.
-          This is not a clinical diagnosis.
-        </p>
-        <div class="hero-rule" aria-hidden="true"></div>
-      </div>
-    </section>
+    <!-- ── ANALYZER SECTION ── -->
+    <section class="analyzer-section" id="analyzer" aria-labelledby="hero-title">
 
-    <!-- ===== FORM SECTION ===== -->
-    <section class="form-section" aria-labelledby="form-heading">
-      <div class="container form-grid">
+      <!-- Left: Hero -->
+      <aside class="hero-panel" aria-label="About StressO_Meter">
 
-        <!-- Form column -->
-        <div class="form-column">
-          <h2 id="form-heading" class="section-heading">Your Profile</h2>
-          <p class="section-subtext">All fields are required. The model was trained on student populations aged 10–100.</p>
+        <div class="hero-content">
+          <div class="hero-tag animate-in" style="--delay:0ms">Mental Health Intelligence</div>
 
-          <form id="predict-form" novalidate aria-label="Depression risk prediction form">
+          <h1 class="hero-title" id="hero-title">
+            <span class="title-line animate-in" style="--delay:80ms">Measure Your</span>
+            <span class="title-line title-accent animate-in" style="--delay:160ms">Depression Risk</span>
+            <span class="title-line animate-in" style="--delay:240ms">In One Go.</span>
+          </h1>
 
-            <!-- === PERSONAL INFO GROUP === -->
-            <fieldset class="form-group">
-              <legend class="group-legend">Personal Information</legend>
+          <p class="hero-desc animate-in" style="--delay:320ms">
+            12 behavioral signals. One trained model. Instant insight into your mental wellness index — grounded in real data, not guesswork.
+          </p>
 
-              <!-- Age -->
-              <div class="field-row" id="field-row-age">
-                <label class="field-label" for="age">Age</label>
-                <input
-                  class="field-input"
-                  type="number"
-                  id="age"
-                  name="Age"
-                  min="10"
-                  max="100"
-                  step="1"
-                  placeholder="10 – 100"
-                  required
-                  aria-describedby="err-age"
-                  aria-required="true"
-                />
-                <span class="field-error" id="err-age" role="alert" aria-live="polite"></span>
+          <div class="hero-stats animate-in" style="--delay:400ms">
+            <div class="stat">
+              <span class="stat-val" data-target="12">0</span>
+              <span class="stat-lbl">Signals</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat">
+              <span class="stat-val" data-target="4">0</span>
+              <span class="stat-lbl">Risk Levels</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat">
+              <span class="stat-val" data-target="1">0</span>
+              <span class="stat-lbl">Click Result</span>
+            </div>
+          </div>
+
+          <div class="privacy-note animate-in" style="--delay:480ms" role="note">
+            <span class="privacy-icon" aria-hidden="true">⚿</span>
+            <p>Your inputs are processed in real time. No personal data is stored permanently on the server.</p>
+          </div>
+        </div>
+
+        <div class="hero-deco" aria-hidden="true">
+          <div class="deco-ring ring-1"></div>
+          <div class="deco-ring ring-2"></div>
+          <div class="deco-ring ring-3"></div>
+        </div>
+
+      </aside>
+
+      <!-- Right: Form + Results -->
+      <div class="form-panel">
+
+        <!-- ── FORM CONTAINER ── -->
+        <div class="form-box animate-in" style="--delay:100ms" id="form-box">
+
+          <div class="form-box-header">
+            <h2 class="form-box-title">Your Profile</h2>
+            <span class="form-box-sub">All 12 fields required</span>
+          </div>
+
+          <div class="global-error" id="form-error-global" role="alert" aria-live="assertive"></div>
+
+          <form id="predict-form" novalidate autocomplete="off" aria-label="Mental health assessment form">
+
+            <div class="form-grid">
+
+              <!-- Row 1 -->
+              <div class="fg fg--age" id="grp-age">
+                <label for="f-age" class="fl">Age</label>
+                <input type="number" id="f-age" name="Age" class="fi"
+                       min="10" max="100" step="1" placeholder="10–100"
+                       required aria-required="true" aria-describedby="err-age" />
+                <span class="fe" id="err-age" role="alert"></span>
               </div>
 
-              <!-- Gender -->
-              <div class="field-row" id="field-row-gender">
-                <fieldset class="radio-fieldset" aria-describedby="err-gender" aria-required="true">
-                  <legend class="field-label">Gender</legend>
-                  <div class="radio-group">
-                    <label class="radio-label">
-                      <input class="radio-input" type="radio" name="Gender" value="Male" required />
-                      <span class="radio-text">Male</span>
+              <div class="fg fg--gender" id="grp-gender">
+                <fieldset class="radio-fs">
+                  <legend class="fl">Gender</legend>
+                  <div class="radio-row">
+                    <label class="rl">
+                      <input type="radio" name="Gender" value="Male" aria-required="true" />
+                      <span class="rc" aria-hidden="true"></span>Male
                     </label>
-                    <label class="radio-label">
-                      <input class="radio-input" type="radio" name="Gender" value="Female" />
-                      <span class="radio-text">Female</span>
+                    <label class="rl">
+                      <input type="radio" name="Gender" value="Female" />
+                      <span class="rc" aria-hidden="true"></span>Female
                     </label>
                   </div>
                 </fieldset>
-                <span class="field-error" id="err-gender" role="alert" aria-live="polite"></span>
+                <span class="fe" id="err-gender" role="alert"></span>
               </div>
 
-              <!-- Country -->
-              <div class="field-row" id="field-row-country">
-                <label class="field-label" for="country">Country</label>
-                <input
-                  class="field-input"
-                  type="text"
-                  id="country"
-                  name="Country"
-                  placeholder="e.g. India, USA, Germany"
-                  required
-                  aria-describedby="err-country hint-country"
-                  aria-required="true"
-                />
-                <span class="field-hint" id="hint-country">Groups outside the top 10 are classified as "Other" by the model.</span>
-                <span class="field-error" id="err-country" role="alert" aria-live="polite"></span>
+              <div class="fg fg--country" id="grp-country">
+                <label for="f-country" class="fl">Country</label>
+                <input type="text" id="f-country" name="Country" class="fi"
+                       placeholder="e.g. India" maxlength="60"
+                       required aria-required="true" aria-describedby="err-country"
+                       autocomplete="country-name" spellcheck="false" />
+                <span class="fe" id="err-country" role="alert"></span>
               </div>
 
-              <!-- Academic Level -->
-              <div class="field-row" id="field-row-academic">
-                <label class="field-label" for="academic-level">Academic Level</label>
-                <select
-                  class="field-select"
-                  id="academic-level"
-                  name="Academic_Level"
-                  required
-                  aria-describedby="err-academic"
-                  aria-required="true"
-                >
-                  <option value="">— Select —</option>
-                  <option value="High School">High School</option>
-                  <option value="Undergraduate">Undergraduate</option>
-                  <option value="Graduate">Graduate</option>
-                </select>
-                <span class="field-error" id="err-academic" role="alert" aria-live="polite"></span>
+              <div class="fg fg--academic" id="grp-academic">
+                <label for="f-academic" class="fl">Academic Level</label>
+                <div class="select-wrap">
+                  <select id="f-academic" name="Academic_Level" class="fi fs"
+                          required aria-required="true" aria-describedby="err-academic">
+                    <option value="">Select…</option>
+                    <option value="High School">High School</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                    <option value="Graduate">Graduate</option>
+                  </select>
+                  <span class="select-arrow" aria-hidden="true">▾</span>
+                </div>
+                <span class="fe" id="err-academic" role="alert"></span>
               </div>
 
-            </fieldset>
-
-            <!-- === SOCIAL MEDIA GROUP === -->
-            <fieldset class="form-group">
-              <legend class="group-legend">Social Media Habits</legend>
-
-              <!-- Most Used Platform -->
-              <div class="field-row" id="field-row-platform">
-                <label class="field-label" for="platform">Most Used Platform</label>
-                <select
-                  class="field-select"
-                  id="platform"
-                  name="Most_Used_Platform"
-                  required
-                  aria-describedby="err-platform"
-                  aria-required="true"
-                >
-                  <option value="">— Select —</option>
-                  <option value="Facebook">Facebook</option>
-                  <option value="Instagram">Instagram</option>
-                  <option value="Twitter">Twitter</option>
-                  <option value="YouTube">YouTube</option>
-                  <option value="TikTok">TikTok</option>
-                  <option value="Snapchat">Snapchat</option>
-                  <option value="LinkedIn">LinkedIn</option>
-                  <option value="WhatsApp">WhatsApp</option>
-                  <option value="WeChat">WeChat</option>
-                  <option value="LINE">LINE</option>
-                  <option value="KakaoTalk">KakaoTalk</option>
-                  <option value="VKontakte">VKontakte</option>
-                </select>
-                <span class="field-error" id="err-platform" role="alert" aria-live="polite"></span>
+              <!-- Row 2 -->
+              <div class="fg fg--platform" id="grp-platform">
+                <label for="f-platform" class="fl">Top Platform</label>
+                <div class="select-wrap">
+                  <select id="f-platform" name="Most_Used_Platform" class="fi fs"
+                          required aria-required="true" aria-describedby="err-platform">
+                    <option value="">Select…</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="YouTube">YouTube</option>
+                    <option value="TikTok">TikTok</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="Twitter">Twitter</option>
+                    <option value="Snapchat">Snapchat</option>
+                    <option value="LinkedIn">LinkedIn</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="WeChat">WeChat</option>
+                    <option value="KakaoTalk">KakaoTalk</option>
+                    <option value="LINE">LINE</option>
+                    <option value="VKontakte">VKontakte</option>
+                  </select>
+                  <span class="select-arrow" aria-hidden="true">▾</span>
+                </div>
+                <span class="fe" id="err-platform" role="alert"></span>
               </div>
 
-              <!-- Purpose of Use -->
-              <div class="field-row" id="field-row-purpose">
-                <label class="field-label" for="purpose">Primary Purpose of Use</label>
-                <select
-                  class="field-select"
-                  id="purpose"
-                  name="Purpose_Of_Use"
-                  required
-                  aria-describedby="err-purpose"
-                  aria-required="true"
-                >
-                  <option value="">— Select —</option>
-                  <option value="Entertainment">Entertainment</option>
-                  <option value="Education">Education</option>
-                  <option value="Networking">Networking</option>
-                  <option value="News">News</option>
-                </select>
-                <span class="field-error" id="err-purpose" role="alert" aria-live="polite"></span>
+              <div class="fg fg--purpose" id="grp-purpose">
+                <label for="f-purpose" class="fl">Usage Purpose</label>
+                <div class="select-wrap">
+                  <select id="f-purpose" name="Purpose_Of_Use" class="fi fs"
+                          required aria-required="true" aria-describedby="err-purpose">
+                    <option value="">Select…</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Education">Education</option>
+                    <option value="Networking">Networking</option>
+                    <option value="News">News</option>
+                  </select>
+                  <span class="select-arrow" aria-hidden="true">▾</span>
+                </div>
+                <span class="fe" id="err-purpose" role="alert"></span>
               </div>
 
-              <!-- Avg Daily Usage Hours -->
-              <div class="field-row" id="field-row-usage">
-                <label class="field-label" for="usage-hours">
-                  Avg. Daily Usage
-                  <span class="label-unit">hours / day</span>
-                </label>
-                <input
-                  class="field-input"
-                  type="number"
-                  id="usage-hours"
-                  name="Avg_Daily_Usage_Hours"
-                  min="0"
-                  max="24"
-                  step="0.5"
-                  placeholder="0 – 24"
-                  required
-                  aria-describedby="err-usage"
-                  aria-required="true"
-                />
-                <span class="field-error" id="err-usage" role="alert" aria-live="polite"></span>
+              <div class="fg fg--usage" id="grp-usage">
+                <label for="f-usage" class="fl">Daily Usage <em class="unit">hrs</em></label>
+                <input type="number" id="f-usage" name="Avg_Daily_Usage_Hours" class="fi"
+                       min="0" max="24" step="0.5" placeholder="0–24"
+                       required aria-required="true" aria-describedby="err-usage" />
+                <span class="fe" id="err-usage" role="alert"></span>
               </div>
 
-              <!-- Daily Unlocks -->
-              <div class="field-row" id="field-row-unlocks">
-                <label class="field-label" for="unlocks">
-                  Daily Unlocks
-                  <span class="label-unit">times / day</span>
-                </label>
-                <input
-                  class="field-input"
-                  type="number"
-                  id="unlocks"
-                  name="Daily_Unlocks"
-                  min="0"
-                  step="1"
-                  placeholder="e.g. 20"
-                  required
-                  aria-describedby="err-unlocks"
-                  aria-required="true"
-                />
-                <span class="field-error" id="err-unlocks" role="alert" aria-live="polite"></span>
+              <div class="fg fg--unlocks" id="grp-unlocks">
+                <label for="f-unlocks" class="fl">Daily Unlocks</label>
+                <input type="number" id="f-unlocks" name="Daily_Unlocks" class="fi"
+                       min="0" step="1" placeholder="e.g. 30"
+                       required aria-required="true" aria-describedby="err-unlocks" />
+                <span class="fe" id="err-unlocks" role="alert"></span>
               </div>
 
-            </fieldset>
-
-            <!-- === DAILY ROUTINE GROUP === -->
-            <fieldset class="form-group">
-              <legend class="group-legend">Daily Routine</legend>
-
-              <!-- Study Hours -->
-              <div class="field-row" id="field-row-study">
-                <label class="field-label" for="study-hours">
-                  Study Hours
-                  <span class="label-unit">hours / day</span>
-                </label>
-                <input
-                  class="field-input"
-                  type="number"
-                  id="study-hours"
-                  name="Study_Hours"
-                  min="0"
-                  max="24"
-                  step="0.5"
-                  placeholder="0 – 24"
-                  required
-                  aria-describedby="err-study"
-                  aria-required="true"
-                />
-                <span class="field-error" id="err-study" role="alert" aria-live="polite"></span>
+              <!-- Row 3 -->
+              <div class="fg fg--study" id="grp-study">
+                <label for="f-study" class="fl">Study <em class="unit">hrs/day</em></label>
+                <input type="number" id="f-study" name="Study_Hours" class="fi"
+                       min="0" max="24" step="0.5" placeholder="0–24"
+                       required aria-required="true" aria-describedby="err-study" />
+                <span class="fe" id="err-study" role="alert"></span>
               </div>
 
-              <!-- Physical Activity Hours -->
-              <div class="field-row" id="field-row-activity">
-                <label class="field-label" for="activity-hours">
-                  Physical Activity
-                  <span class="label-unit">hours / day</span>
-                </label>
-                <input
-                  class="field-input"
-                  type="number"
-                  id="activity-hours"
-                  name="Physical_Activity_Hours"
-                  min="0"
-                  max="24"
-                  step="0.5"
-                  placeholder="0 – 24"
-                  required
-                  aria-describedby="err-activity"
-                  aria-required="true"
-                />
-                <span class="field-error" id="err-activity" role="alert" aria-live="polite"></span>
+              <div class="fg fg--activity" id="grp-activity">
+                <label for="f-activity" class="fl">Exercise <em class="unit">hrs/day</em></label>
+                <input type="number" id="f-activity" name="Physical_Activity_Hours" class="fi"
+                       min="0" max="24" step="0.5" placeholder="0–24"
+                       required aria-required="true" aria-describedby="err-activity" />
+                <span class="fe" id="err-activity" role="alert"></span>
               </div>
 
-              <!-- Sleep Hours Per Night -->
-              <div class="field-row" id="field-row-sleep">
-                <label class="field-label" for="sleep-hours">
-                  Sleep
-                  <span class="label-unit">hours / night</span>
-                </label>
-                <input
-                  class="field-input"
-                  type="number"
-                  id="sleep-hours"
-                  name="Sleep_Hours_Per_Night"
-                  min="0"
-                  max="24"
-                  step="0.5"
-                  placeholder="0 – 24"
-                  required
-                  aria-describedby="err-sleep"
-                  aria-required="true"
-                />
-                <span class="field-error" id="err-sleep" role="alert" aria-live="polite"></span>
+              <div class="fg fg--sleep" id="grp-sleep">
+                <label for="f-sleep" class="fl">Sleep <em class="unit">hrs/night</em></label>
+                <input type="number" id="f-sleep" name="Sleep_Hours_Per_Night" class="fi"
+                       min="0" max="24" step="0.5" placeholder="0–24"
+                       required aria-required="true" aria-describedby="err-sleep" />
+                <span class="fe" id="err-sleep" role="alert"></span>
               </div>
 
-              <!-- Stress Level -->
-              <div class="field-row" id="field-row-stress">
-                <label class="field-label" for="stress-level">Self-Reported Stress Level</label>
-                <select
-                  class="field-select"
-                  id="stress-level"
-                  name="Stress_Level"
-                  required
-                  aria-describedby="err-stress"
-                  aria-required="true"
-                >
-                  <option value="">— Select —</option>
-                  <option value="Low">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
-                  <option value="Very High">Very High</option>
-                </select>
-                <span class="field-error" id="err-stress" role="alert" aria-live="polite"></span>
+              <div class="fg fg--stress" id="grp-stress">
+                <label for="f-stress" class="fl">Stress Level</label>
+                <div class="select-wrap">
+                  <select id="f-stress" name="Stress_Level" class="fi fs"
+                          required aria-required="true" aria-describedby="err-stress">
+                    <option value="">Select…</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Very High">Very High</option>
+                  </select>
+                  <span class="select-arrow" aria-hidden="true">▾</span>
+                </div>
+                <span class="fe" id="err-stress" role="alert"></span>
               </div>
 
-            </fieldset>
+            </div><!-- /form-grid -->
 
-            <!-- Submit -->
-            <div class="submit-row">
-              <button class="btn-submit" type="submit" id="submit-btn">
-                <span class="btn-text">Analyze</span>
-                <span class="btn-loading" aria-hidden="true">Processing&hellip;</span>
+            <div class="form-actions">
+              <button type="submit" id="submit-btn" class="submit-btn">
+                <span class="btn-label">Analyze My Profile</span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
+                <span class="btn-ripple" aria-hidden="true"></span>
               </button>
-              <span class="submit-hint">Results appear in the panel to the right.</span>
+              <span class="form-actions-note">Secure · No data stored</span>
             </div>
-
-            <!-- Form-level error -->
-            <div class="form-error-global" id="form-error-global" role="alert" aria-live="polite" aria-atomic="true"></div>
 
           </form>
-        </div><!-- /form-column -->
+        </div><!-- /form-box -->
 
-        <!-- Results column -->
-        <aside class="results-column" aria-label="Prediction results" aria-live="polite" aria-atomic="true">
-          <div class="results-panel" id="results-panel">
+        <!-- ── RESULTS CONTAINER ── -->
+        <div class="results-box" id="results-container" aria-live="polite" aria-label="Assessment results">
 
-            <!-- Empty state -->
-            <div class="results-empty" id="results-empty">
-              <div class="results-empty-label">Awaiting Analysis</div>
-              <p class="results-empty-text">
-                Complete the form and submit. Your predicted depression score will appear here, along with the input data the model received.
-              </p>
-            </div>
-
-            <!-- Result content (hidden until populated) -->
-            <div class="results-content" id="results-content" hidden>
-
-              <div class="result-score-block">
-                <div class="result-score-label">Predicted Depression Score</div>
-                <div class="result-score-value" id="result-score">—</div>
-                <div class="result-score-band" id="result-score-band"></div>
-                <p class="result-score-note">Score range: 0 (minimal risk) to higher values (elevated risk). This is a model estimate, not a clinical assessment.</p>
+          <div class="res-panel res-content" id="results-content">
+            <div class="res-header">
+              <div>
+                <div class="res-tag">Assessment Complete</div>
+                <h2 class="res-title">Your Result</h2>
               </div>
+              <button class="back-btn" id="result-back-btn" aria-label="Go back to form">
+                ← Reassess
+              </button>
+            </div>
 
-              <div class="result-rule" aria-hidden="true"></div>
+            <div class="res-score-block">
+              <div class="res-score-label">Depression Risk Level</div>
+              <div class="res-score" id="result-score">—</div>
+              <div class="res-band" id="result-score-band"></div>
+            </div>
 
-              <div class="result-inputs-block">
-                <h3 class="result-inputs-heading">Submitted Profile</h3>
-                <dl class="result-inputs-list" id="result-inputs-list">
-                  <!-- Populated by JS -->
-                </dl>
+            <div class="res-meter" aria-label="Risk meter">
+              <div class="meter-track">
+                <div class="meter-fill" id="meter-fill" style="width:0%"></div>
+                <div class="meter-glow" id="meter-glow"></div>
               </div>
-
-            </div><!-- /results-content -->
-
-            <!-- Error state (hidden until needed) -->
-            <div class="results-error" id="results-error" hidden role="alert">
-              <div class="results-error-title">Request Failed</div>
-              <p class="results-error-msg" id="results-error-msg"></p>
+              <div class="meter-ticks">
+                <span>Low</span><span>Medium</span><span>High</span><span>Very High</span>
+              </div>
             </div>
 
-          </div><!-- /results-panel -->
-        </aside>
-
-      </div><!-- /form-grid -->
-    </section>
-
-    <!-- ===== HOW IT WORKS ===== -->
-    <section class="how-section" aria-labelledby="how-heading">
-      <div class="container how-inner">
-        <h2 id="how-heading" class="section-heading">How It Works</h2>
-        <div class="how-rule" aria-hidden="true"></div>
-        <ol class="how-list">
-          <li class="how-item">
-            <span class="how-num">01</span>
-            <div class="how-text">
-              <strong class="how-title">You enter twelve values.</strong>
-              Age, gender, country, academic level, the platform you use most, why you use it,
-              how many hours you spend on it daily, how often you unlock your phone, your study hours,
-              physical activity, sleep, and self-reported stress.
+            <div class="res-profile">
+              <h3 class="res-profile-title">Submitted Profile</h3>
+              <div class="res-grid" id="result-inputs-list"></div>
             </div>
-          </li>
-          <li class="how-item">
-            <span class="how-num">02</span>
-            <div class="how-text">
-              <strong class="how-title">The data is sent to a FastAPI server.</strong>
-              Your inputs are encoded into a JSON payload and posted to the
-              <code>/predict</code> endpoint. The server validates every field against the same
-              constraints enforced in the form.
+          </div><!-- /res-content -->
+
+          <div class="res-panel res-error" id="results-error">
+            <div class="res-error-icon" aria-hidden="true">⊗</div>
+            <p class="res-error-msg" id="results-error-msg">Something went wrong.</p>
+            <button class="retry-btn" id="error-retry-btn">Try Again</button>
+          </div>
+
+        </div><!-- /results-container -->
+
+      </div><!-- /form-panel -->
+    </section><!-- /analyzer-section -->
+
+    <!-- ── HOW IT WORKS ── -->
+    <section class="how-section" id="how-section" aria-labelledby="how-title">
+      <div class="how-inner">
+        <div class="how-header">
+          <h2 class="how-title" id="how-title">How It Works</h2>
+          <div class="how-rule" aria-hidden="true"></div>
+        </div>
+        <ol class="how-steps">
+          <li class="how-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <strong class="step-head">Fill Your Profile</strong>
+              <p>Enter all 12 behavioral signals in the form above — age, gender, social media habits, study hours, and more. Every field is validated before submission.</p>
             </div>
           </li>
-          <li class="how-item">
-            <span class="how-num">03</span>
-            <div class="how-text">
-              <strong class="how-title">A trained model returns a score.</strong>
-              The backend passes your data through a scikit-learn pipeline trained on the
-              Student Social Media &amp; Mental Health dataset. The score is a continuous value
-              representing predicted depression risk.
+          <li class="how-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <strong class="step-head">Model Inference</strong>
+              <p>Your data travels securely to the FastAPI backend, where a trained machine learning model processes each behavioral signal in milliseconds.</p>
             </div>
           </li>
-          <li class="how-item">
-            <span class="how-num">04</span>
-            <div class="how-text">
-              <strong class="how-title">The result is displayed alongside your profile.</strong>
-              The <code>/get</code> endpoint retrieves the recorded result. Both the score and the
-              exact inputs the model saw are shown so you can verify the submission was correct.
+          <li class="how-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <strong class="step-head">Instant Assessment</strong>
+              <p>Your depression risk level — Low, Medium, High, or Very High — is returned and visualized immediately. Use it to reflect on your digital habits.</p>
             </div>
           </li>
         </ol>
-
-        <div class="how-disclaimer">
-          <strong>Important.</strong> This tool uses a statistical model trained on survey data.
-          It is not a substitute for professional mental health evaluation.
-          If you are experiencing distress, speak to a qualified counsellor or clinician.
-        </div>
       </div>
     </section>
 
-  </main>
+  </main><!-- /site-main -->
 
-  <!-- ===== FOOTER ===== -->
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
   <footer class="site-footer" role="contentinfo">
-    <div class="container footer-inner">
-      <span class="footer-brand">StressO_Meter</span>
-      <span class="footer-year">2025</span>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-emblem sm" aria-hidden="true">
+          <span class="emblem-ring"></span>
+          <span class="emblem-dot"></span>
+        </div>
+        <span class="brand-text sm">StressO<span class="brand-accent">_</span>Meter</span>
+      </div>
+      <div class="footer-meta">
+        <span class="footer-credit">Made by <strong>Lovneesh Agrawal</strong></span>
+        <span class="footer-sep" aria-hidden="true">·</span>
+        <span>© 2026 StressO_Meter</span>
+        <span class="footer-sep" aria-hidden="true">·</span>
+        <span>For educational purposes only</span>
+      </div>
+      <div class="footer-secure">
+        <span class="footer-secure-pill" aria-label="Secure processing">⚿ Secure</span>
+      </div>
     </div>
   </footer>
 
