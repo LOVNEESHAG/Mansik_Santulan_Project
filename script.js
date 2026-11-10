@@ -31,7 +31,7 @@
 /* ═══════════════════════════════════════════════════════════════
    CONFIGURATION
    ═══════════════════════════════════════════════════════════════ */
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = 'https://mansik-santulan-project.onrender.com';
 
 /** Minimum milliseconds between submissions (rate limiting). */
 const RATE_LIMIT_MS = 3000;
